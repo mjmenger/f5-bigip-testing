@@ -1,0 +1,51 @@
+---
+driver:
+  name: terraform
+  root_module_directory: test/fixtures/aws
+  parallelism: 4
+  command_timeout: 1200
+
+provisioner:
+  name: terraform
+
+verifier:
+  name: terraform
+  systems:
+    - name: local
+      backend: local
+      profile_locations:
+        - https://github.com/f5devcentral/big-ip-atc-ready.git
+        - test/integration/bigip
+      controls:
+        - bigip-postbuildconfig-do-self
+        - bigip-postbuildconfig-do-dns
+        - bigip-postbuildconfig-do-vlan
+        - bigip-postbuildconfig-do-provision
+        - bigip-connectivity        
+        - bigip-declarative-onboarding
+        - bigip-declarative-onboarding-version
+        - bigip-application-services
+        - bigip-application-services-version
+        - bigip-telemetry-streaming
+        - bigip-telemetry-streaming-version
+        - bigip-licensed
+
+platforms:
+  - name: aws
+    
+    driver:
+      root_module_directory: test/fixtures/aws
+      variable_files:
+        - test/assets/aws.tfvars
+        
+  - name: azure
+    lifecycle:
+      post_converge:
+        - local: echo 'waiting 200 seconds for Azure to stabilize' && sleep 200
+    driver:
+      root_module_directory: test/fixtures/azure
+      variable_files:
+        - test/assets/azure.tfvars
+
+suites:
+  - name: bigip
