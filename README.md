@@ -76,3 +76,5 @@ Finally, the ```controls``` parameter is a list of the controls and their associ
 
 
 ## Go Go Go 
+First things first, follow the steps in the [setup documentation](SETUP.md) to get your testing host ready.
+
