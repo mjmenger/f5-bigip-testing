@@ -51,3 +51,10 @@ Using the contents of the ```Gemfile``` you created earlier, Bundler will make c
 ```bash
 bundle install
 ```
+
+### Setup AWS credentials
+The AWS Terraform code in this repository assumes that the necessary credentials are configured as [environment variables](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#environment-variables) or in a [shared credentials file](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#shared-credentials-file). Please choose the approach that works for you and follow the documentation at either link.
+
+### Setup Azure credentials
+The Azure Terraform code in this repository assumes that you've authenticated with the proper account [using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli). There are alternative approaches, which you can also read about at the same link. At this time, the CLI approach is the only one with which we've tested.
+
