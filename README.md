@@ -7,7 +7,7 @@ We're going to focus on test automation in this article to help you integrate yo
 - A variety of tools are used in this demonstration. In most cases they are not exclusively required and can be replaced with other similar tools. 
 
 ## Enough Expository Already
-If you just want to run the code and see the output, then feel free to charge ahead
+If you just want to run the code and see the output, then feel free to [charge ahead](#go-go-go)
 
 ## Use Case
 For simplicity's sake, we're going to validate a simple use-case. We want to validate that our [Declarative On-boarding](https://clouddocs.f5.com/products/extensions/f5-declarative-onboarding/latest/) declaration works as expected on both AWS and Azure. You can find the declaration in [do.json](do.json).
