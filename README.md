@@ -78,3 +78,21 @@ Finally, the ```controls``` parameter is a list of the controls and their associ
 ## Go Go Go 
 First things first, follow the steps in the [setup documentation](SETUP.md) to get your testing host ready.
 
+### Setup Terraform input
+- create ```aws.tfvars``` from [aws.tfvars.example](test/assets/aws.tfvars.example)
+- create ```azure.tfvars``` from [azure.tfvars.example](test/assets/aws.tfvars.example)
+
+### First time through
+You should be good to go now. Let's test on AWS.
+- build on AWS (should take about ten minutes)
+```bash
+bundle exec kitchen converge aws
+```
+- test on AWS (this should take a few minutes)
+```bash
+bundle exec kitchen verify aws
+```
+- destroy the AWS environment
+```bash
+bundle exec kitchen destroy aws
+```
