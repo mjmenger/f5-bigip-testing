@@ -5,6 +5,20 @@
     "label": "Onboard BIG-IP",
     "Common": {
         "class": "Tenant",
+        "myLicense": {
+            "class": "License",
+            "licenseType": "licensePool",
+            "bigIqHost": "${bigiq_hostname}",
+            "bigIqUsername": "${bigiq_username}",
+            "bigIqPassword": "${bigiq_password}",
+            "licensePool": "${licensePool}",
+            "skuKeyword1": "${skuKeyword1}",
+            "unitOfMeasure": "${unitOfMeasure}",
+            "reachable": "${reachable}",
+            "bigIpUsername": "${bigIpUsername}",
+            "bigIpPassword": "${bigIpPassword}",
+            "hypervisor": "${hypervisor}"
+        },        
         "myDns": {
             "class": "DNS",
             "nameServers": [
