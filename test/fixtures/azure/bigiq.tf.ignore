@@ -1,0 +1,61 @@
+# Deploy BIGIQ Module
+module "bigiq" {
+  source = "github.com/vinnie357/terraform-azure-bigiq?ref=master"
+  # setup
+  prefix        = var.prefix
+  buildSuffix   = format("-%s",random_id.id.hex)
+  resourceGroup = azurerm_resource_group.main
+  instanceType  = var.instanceType_bigiq
+  # bigiq
+  imageName        = var.imageName_bigiq
+  bigiqVersion     = var.bigiqVersion_bigiq
+  hostName         = var.hostName_bigiq
+  dnsServers       = var.dnsServers_bigiq
+  ntpServers       = var.ntpServers_bigiq
+  dnsSearchDomains = var.dnsSearchDomains_bigiq
+  masterKey        = random_string.bigiq_password.result
+  timeZone         = var.timeZone
+  diskType         = var.diskType_bigiq
+  # admin
+  adminSourceRange = var.allowed_mgmt_cidr
+  adminPassword    = random_string.bigiq_password.result
+  adminName        = var.adminAccountName_bigiq
+  bigIqLicenseKey  = var.bigIqLicenseKey
+  sshPublicKey     = file(var.publickeyfile)
+  #networks
+  subnetMgmt                  = azurerm_subnet.mgmt
+  subnetDiscovery             = azurerm_subnet.discovery
+  bigiqPrivateDiscoveryIpCidr = var.bigiqPrivateDiscoveryIpCidr
+  cidr                        = var.cidr
+  bigiqPrivateMgmtIp          = var.bigiqPrivateMgmtIp
+  bigiqPrivateDiscoveryIp     = var.bigiqPrivateDiscoveryIp
+  networkSecurityGroup        = azurerm_network_security_group.main
+}
+resource random_integer bigiq_password_length {
+    min = 16
+    max = 24
+}
+resource random_string bigiq_password {
+    length = random_integer.bigiq_password_length.result
+    special = true
+    override_special = "@_"
+    min_lower = 1
+    min_upper = 1
+    min_numeric = 1
+    min_special = 1
+}
+
+variable instanceType_bigiq { default = "Standard_D4s_v3" }
+variable imageName_bigiq { default = "f5-bigiq-virtual-edition-byol" }
+variable bigiqVersion_bigiq { default = "latest" }
+variable diskType_bigiq { default = "Premium_LRS" }
+variable license1_bigiq { default = "" }
+variable license2 { default = "" }
+variable hostName_bigiq { default = "bigiq01" }
+variable dnsServers_bigiq { default = "8.8.8.8" }
+variable dnsSearchDomains { default = "example.com" }
+variable ntpServers_bigiq { default = "0.us.pool.ntp.org" }
+variable timezone { default = "UTC" }
+variable onboard_log { default = "/var/log/startup-script.log" }
+variable adminAccountName_bigiq { default = "admin" }
+variable bigIqLicenseKey {}
