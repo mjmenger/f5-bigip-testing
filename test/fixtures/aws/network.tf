@@ -30,11 +30,9 @@ module "vpc" {
   create_database_subnet_route_table     = true
   create_database_internet_gateway_route = true
 
-  tags = {
-    Name        = format("%s-vpc-%s", var.prefix, random_id.id.hex)
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  tags = merge(local.tags,{
+    Name = format("%s-vpc-%s", var.prefix, random_id.id.hex)
+  })
 }
 
 module "bigip_sg" {
@@ -58,6 +56,10 @@ module "bigip_sg" {
   # Allow ec2 instances outbound Internet connectivity
   egress_cidr_blocks = ["0.0.0.0/0"]
   egress_rules       = ["all-all"]
+
+  tags = merge(local.tags,{
+    Name = format("%s-bigip-%s", var.prefix, random_id.id.hex)
+  })
 }
 
 #
@@ -83,4 +85,8 @@ module "bigip_mgmt_sg" {
   # Allow ec2 instances outbound Internet connectivity
   egress_cidr_blocks = ["0.0.0.0/0"]
   egress_rules       = ["all-all"]
+
+  tags = merge(local.tags,{
+    Name = format("%s-bigip-mgmt-%s", var.prefix, random_id.id.hex)
+  })
 }

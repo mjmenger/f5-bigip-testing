@@ -16,3 +16,11 @@ resource "random_string" "password" {
   special          = true
   override_special = "_%@"
 }
+
+locals {
+  tags = merge({
+    Terraform   = "true"
+    Environment = "dev"
+    Automation  = "Terraform"
+  },var.tags)
+}

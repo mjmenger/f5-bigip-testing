@@ -55,3 +55,8 @@ variable "ec2_key_file" {
 variable "nameserver" {
   default = "8.8.8.8"
 }
+
+variable tags {
+  description = "map of tags to assign to all resources"
+  default     = {}
+}
