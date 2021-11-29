@@ -86,3 +86,8 @@ variable onboard_log {
 variable "nameserver" {
   default = "8.8.8.8"
 }
+
+variable tags {
+    description = "map of key-values pairs to use as tags on all resources created"
+    default = {}
+}

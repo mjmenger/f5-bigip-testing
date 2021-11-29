@@ -11,10 +11,8 @@ module "network" {
   subnet_prefixes     = [cidrsubnet(var.cidr, 8, 1), cidrsubnet(var.cidr, 8, 2), cidrsubnet(var.cidr, 8, 3)]
   subnet_names        = ["mgmt-subnet", "external-subnet", "internal-subnet"]
 
-  tags = {
-    environment = "test"
-    costcenter  = "it"
-  }
+  tags = merge(local.tags,{})
+
 }
 
 data "azurerm_subnet" "mgmt" {
@@ -46,10 +44,7 @@ module mgmt-network-security-group {
   source              = "Azure/network-security-group/azurerm"
   resource_group_name = azurerm_resource_group.main.name
   security_group_name = format("%s-mgmt-nsg-%s", var.prefix, random_id.id.hex)
-  tags = {
-    environment = "test"
-    costcenter  = "test"
-  }
+  tags = merge(local.tags,{})
 }
 
 #
@@ -59,10 +54,7 @@ module external-network-security-group {
   source              = "Azure/network-security-group/azurerm"
   resource_group_name = azurerm_resource_group.main.name
   security_group_name = format("%s-external-nsg-%s", var.prefix, random_id.id.hex)
-  tags = {
-    environment = "dev"
-    costcenter  = "terraform"
-  }
+  tags = merge(local.tags,{})
 }
 
 resource "azurerm_network_security_rule" "mgmt_allow_https" {
@@ -127,8 +119,4 @@ module "internal-network-security-group" {
   resource_group_name   = azurerm_resource_group.main.name
   security_group_name   = format("%s-internal-nsg-%s", var.prefix, random_id.id.hex)
   source_address_prefix = ["10.0.3.0/24"]
-  tags = {
-    environment = "dev"
-    costcenter  = "terraform"
-  }
 }
