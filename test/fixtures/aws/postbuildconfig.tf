@@ -3,7 +3,7 @@ module "postbuild-config-do" {
   version = "0.3.3"
   bigip_user       = "admin"
   bigip_password   = random_string.password.result
-  bigip_address    = module.bigip[0].mgmtPublicIP[0]
+  bigip_address    = module.bigip[0].mgmtPublicIP
   bigip_do_payload = templatefile("${path.module}/../../../do.json",{ nameserver = var.nameserver })
   depends_on = [
     module.bigip

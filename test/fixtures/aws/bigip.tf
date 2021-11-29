@@ -1,5 +1,5 @@
 module "bigip" {
-  source                     = "git::git@github.com:f5devcentral/terraform-aws-bigip-module.git" #?ref=v0.9.7" tags will be supported in the next release
+  source                     = "git::git@github.com:F5Networks/terraform-aws-bigip-module.git?ref=v1.0.0" #?ref=v0.9.7" tags will be supported in the next release
   count                      = 1
   prefix                     = format("%s-3nic", var.prefix)
   f5_ami_search_name         = "F5 BIGIP-15.* PAYG-Best 200Mbps*"
